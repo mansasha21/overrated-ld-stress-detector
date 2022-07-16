@@ -18,7 +18,7 @@ current_dir = Path(__file__).absolute().parent
 
 
 def get_version() -> str:
-    version_file = current_dir / "src" / "overrated_ld_stress-detector" / "__init__.py"
+    version_file = current_dir / "src" / "overrated_ld_stress_detector" / "__init__.py"
     with version_file.open(encoding="utf-8") as f:
         return re.search(r'^__version__ = [\'"]([^\'"]*)[\'"]', f.read(), re.M).group(1)  # type: ignore
 
