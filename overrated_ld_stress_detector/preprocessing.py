@@ -67,9 +67,9 @@ def process_data(df):
             continue
 
     prep_df = stats_df.astype({
-        'Test_index': 'category',
-        'Presentation': 'category',
-        'Question': 'category'
+        'Test_index': 'int',
+        'Presentation': 'int',
+        'Question': 'int'
     })
 
     N = 10

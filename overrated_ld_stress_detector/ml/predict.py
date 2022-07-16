@@ -1,8 +1,8 @@
 import pickle
 
-from catboost import CatBoostClassifier
+import numpy as np
 import overrated_ld_stress_detector.preprocessing as preprocessing
-import torch
+from scipy import stats
 
 
 class PytorchModel:
@@ -24,14 +24,13 @@ class PytorchModel:
 class CatboostModel:
     def __init__(self,
                  model_path=None,
-                 model_type="") -> None:
-        self.model = pickle.load(open(model_path,'rb'))
-
+                 model_count=5) -> None:
+        self.models = [pickle.load(open(model_path + "/model_" + str(i) + ".pckl", 'rb')) for i in range(model_count)]
+        self.model_count = model_count
     def predict(self, df):
         '''
         :param df: pandas.DataFrame
         '''
         modified_data = preprocessing.process_data(df)
-        modified_data.to_csv("modified_data.csv")
-        print(modified_data.columns)
-        return self.model.predict(modified_data)
+        result = np.array([self.models[i].predict(modified_data).flatten() for i in range(0, self.model_count)])
+        return stats.mode(result)[0][0]

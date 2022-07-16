@@ -1,15 +1,8 @@
 import catboost
-from ml.predict import PytorchModel
-from ml.predict import CatboostModel
+from overrated_ld_stress_detector.ml.predict import PytorchModel
+from overrated_ld_stress_detector.ml.predict import CatboostModel
 
 
-def load_weights():
-    return ""
-
-
-def get_model(model_path=None,
-              model_type='fastest'):
-    if model_path is None:
-        model_path = load_weights()
+def get_model(model_path=None):
     model = CatboostModel(model_path)
     return model

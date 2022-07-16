@@ -31,7 +31,7 @@ def visualize_data(df,
         target = df[df.Filename == f'{user_id}'].query(f'Test_index=={test_id}').query(
         f'Presentation=={presentation_id}').Class_label.values
     else:
-        target = result.values
+        target = result
 
     col_dict = {0: 'green', 1: 'yellow', 2: 'red'}
 
