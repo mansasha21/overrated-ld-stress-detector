@@ -97,7 +97,8 @@ setup(
     author="Overrated team",
     license="MIT",
     url=url,
-    packages=find_packages(exclude=["tests", "docs", "images"]),
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
     install_requires=required,
     extras_require=extras,
     classifiers=[

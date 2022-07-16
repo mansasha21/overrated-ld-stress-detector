@@ -1,1 +1,0 @@
-# overrated-ld-stress-detector
