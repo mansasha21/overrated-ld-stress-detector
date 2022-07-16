@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 
 def process_data(df):
@@ -119,3 +119,23 @@ def process_data(df):
     try_set = sensor_df.drop(['Data_2', 'Data', 'Filename',
                               'data_2_apm', 'data_2_phase', 'data_apm', 'data_phase'], axis=1)
     return try_set
+
+
+def process_data_nn(df):
+    correct_mask = (df.Data.apply(lambda x: len(eval(x))) == 240) & (df.Data_2.apply(lambda x: len(eval(x))) == 240)
+
+    vals = df.loc[correct_mask].Data.apply(eval)
+    res = [val for val in vals if len(val) == 240]
+    data = np.array(res)
+    sc = StandardScaler()
+    transformed_data_1 = sc.fit_transform(data)
+
+    vals = df.loc[correct_mask].Data_2.apply(eval)
+    res = [val for val in vals if len(val) == 240]
+    data = np.array(res)
+    sc = StandardScaler()
+    transformed_data_2 = sc.fit_transform(data)
+
+    transformed_data = np.concatenate((transformed_data_1, transformed_data_2), axis=1)
+    return transformed_data
+
