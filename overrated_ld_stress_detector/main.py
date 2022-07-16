@@ -18,6 +18,6 @@ result = model.predict(df.iloc[:200])
 print(result)
 utils.visualize_data(df,
                      user_id='8fc79c7f-bbdb-4512-b460-c75aacd1a3c7',
-                     test_id=4,
+                     test_id=3,
                      presentation_id=1,
                      result=result)

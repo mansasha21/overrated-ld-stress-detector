@@ -50,7 +50,7 @@ class SignalModel(nn.Module):
 
 class PytorchModel:
     def __init__(self,
-                 model_path='/Users/a19592817/Desktop/study/overrated-ld-stress-detector/overrated_ld_stress_detector/models/nn_full.pth',
+                 model_path='models/nn_full.pth',
                  device: str = "cpu") -> None:
         self.model = SignalModel()
         self.model.load_state_dict(torch.load(model_path, map_location=torch.device(device)))
