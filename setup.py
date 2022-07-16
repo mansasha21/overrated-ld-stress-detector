@@ -5,6 +5,7 @@ from pathlib import Path
 from shutil import rmtree
 from typing import List, Tuple
 
+import setuptools
 from setuptools import Command, find_packages, setup
 
 # Package meta-data.
@@ -98,7 +99,7 @@ setup(
     author="Overrated team",
     license="MIT",
     url=url,
-    packages=find_packages(),
+    packages=setuptools.find_packages(),
     install_requires=required,
     classifiers=[
         "License :: OSI Approved :: MIT License",
