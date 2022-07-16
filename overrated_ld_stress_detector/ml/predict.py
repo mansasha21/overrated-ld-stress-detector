@@ -59,7 +59,7 @@ class PytorchModel:
     def predict(self, data):
         self.model.eval()
         prepared_data = torch.tensor(preprocessing.process_data_nn(data), dtype=torch.float32).to(self.device).unsqueeze(1)
-        return self.model(prepared_data).cpu().detach().numpy().flatten()
+        return self.model(prepared_data).cpu().detach().argmax(1).numpy().flatten()
 
 
 class CatboostModel:
