@@ -18,7 +18,7 @@ current_dir = Path(__file__).absolute().parent
 
 
 def get_version() -> str:
-    version_file = current_dir / "src" / "overrated_ld_stress_detector" / "__init__.py"
+    version_file = current_dir / "overrated_ld_stress_detector" / "__init__.py"
     with version_file.open(encoding="utf-8") as f:
         return re.search(r'^__version__ = [\'"]([^\'"]*)[\'"]', f.read(), re.M).group(1)  # type: ignore
 
@@ -98,10 +98,8 @@ setup(
     author="Overrated team",
     license="MIT",
     url=url,
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
+    packages=find_packages(),
     install_requires=required,
-    extras_require=extras,
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Intended Audience :: Developers",
