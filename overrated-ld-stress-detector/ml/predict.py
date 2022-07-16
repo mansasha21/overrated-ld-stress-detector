@@ -1,4 +1,7 @@
-import catboost
+import pickle
+
+from catboost import CatBoostClassifier
+import preprocessing
 import torch
 
 
@@ -22,10 +25,12 @@ class CatboostModel:
     def __init__(self,
                  model_path=None,
                  model_type="") -> None:
-        self.model = catboost.CatBoost(model_path)
+        self.model = pickle.load(open(model_path,'rb'))
 
-    def eval(self) -> None:
-        self.model.eval()
-
-    def predict(data):
-        pass
+    def predict(self, df):
+        '''
+        :param df: pandas.DataFrame
+        '''
+        modified_data = preprocessing.process_data(df)
+        print(modified_data.columns)
+        return self.model.predict(modified_data)
