@@ -1,6 +1,6 @@
 import catboost
-from ml.predict import PytorchModel
-from ml.predict import CatboostModel
+from overrated_ld_stress_detector.ml.predict import PytorchModel
+from overrated_ld_stress_detector.ml.predict import CatboostModel
 
 
 def load_weights():

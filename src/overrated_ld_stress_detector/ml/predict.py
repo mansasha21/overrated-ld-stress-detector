@@ -1,7 +1,7 @@
 import pickle
 
 from catboost import CatBoostClassifier
-import preprocessing
+import overrated_ld_stress_detector.preprocessing as preprocessing
 import torch
 
 
