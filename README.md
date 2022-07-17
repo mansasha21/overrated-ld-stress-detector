@@ -18,8 +18,7 @@ from overrated_ld_stress_detector.ml import pretrained_model # импорт ра
 from overrated_ld_stress_detector.visualization import utils  # импорт разработанного решения
 
 df = pd.read_excel("models/dataset_train.xlsx", # путь до данных, которые необходимо проанализировать
-                   engine='openpyxl') # Загрузка данных из Excel, которые необходимо проанализировать
-
+                   engine='openpyxl') # Загрузка данных из Excel
 
 model = pretrained_model.get_model(model_type='catboost') # Загрузка модели. Доступные модели: 'catboost' и 'cnn'
 

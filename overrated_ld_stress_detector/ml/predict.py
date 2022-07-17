@@ -6,12 +6,14 @@ import overrated_ld_stress_detector.preprocessing as preprocessing
 from scipy import stats
 from catboost import CatBoostClassifier
 from sklearn.model_selection import StratifiedKFold
+import os
 
 
 class SignalModel(nn.Module):
     """
     Define architecture of the used model
     """
+
     def __init__(self):
         """
         Initialize the model with Convolution 1d layers
@@ -62,15 +64,16 @@ class PytorchModel:
     """
     Convoluted neural network model for predicting the stress level of a signal.
     """
+
     def __init__(self,
-                 model_path='models/nn_full.pth',
+                 model_path=os.getcwd() + '/models/nn_full.pth',
                  device: str = "cpu") -> None:
         """
         :param model_path: str, path to model file
         :param device: str, device to use ['cpu', 'cuda']
         """
         if model_path is None:
-            model_path = 'models/nn_full.pth'
+            model_path = os.getcwd() + '/models/nn_full.pth'
         self.model = SignalModel()
         self.model.load_state_dict(torch.load(model_path, map_location=torch.device(device)))
         self.device = device
@@ -82,7 +85,8 @@ class PytorchModel:
         :return: pandas.DataFrame with predicted results
         """
         self.model.eval()
-        prepared_data = torch.tensor(preprocessing.process_data_nn(data), dtype=torch.float32).to(self.device).unsqueeze(1)
+        prepared_data = torch.tensor(preprocessing.process_data_nn(data), dtype=torch.float32).to(
+            self.device).unsqueeze(1)
         return self.model(prepared_data).cpu().detach().argmax(1).numpy().flatten()
 
 
@@ -90,8 +94,9 @@ class CatboostModel:
     """
     Gradient boosting catboost model
     """
+
     def __init__(self,
-                 model_path='models',
+                 model_path=os.getcwd() + '/models/',
                  model_count=5) -> None:
         """
         Load and initialize models from files.
@@ -99,8 +104,8 @@ class CatboostModel:
         :param model_count: int, number of models to load
         """
         if model_path is None:
-            model_path = 'models'
-        self.models = [pickle.load(open(model_path + '/model_' + str(i) + ".pckl", 'rb')) for i in range(model_count)]
+            model_path = os.getcwd() + '/models/'
+        self.models = [pickle.load(open(model_path + 'model_' + str(i) + ".pckl", 'rb')) for i in range(model_count)]
         self.model_count = model_count
 
     def predict(self, df):
@@ -116,7 +121,7 @@ class CatboostModel:
     def train(self,
               df,
               model_count=5,
-              save_path='models/',
+              save_path=os.getcwd() + '/models/',
               iterations=1000,
               ):
         """

@@ -47,7 +47,9 @@ def get_test_requirements() -> List[str]:
 
 
 def get_long_description() -> str:
-    return ""
+    base_dir = Path(__file__).absolute().parent
+    with (base_dir / "README.md").open(encoding="utf-8") as f:
+        return f.read()
 
 
 class UploadCommand(Command):
