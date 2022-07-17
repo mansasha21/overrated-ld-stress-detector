@@ -14,18 +14,24 @@
 # Пример использования
 ```python
 import pandas as pd
-from overrated_ld_stress_detector.ml import pretrained_model # импорт разработанного решения
-from overrated_ld_stress_detector.visualization import utils  # импорт разработанного решения
+from overrated_ld_stress_detector.ml import pretrained_model # импорт разработанного решения предсказания
+from overrated_ld_stress_detector.visualization import utils  # импорт разработанного решения визуализации
 
-df = pd.read_excel("models/dataset_train.xlsx", # путь до данных, которые необходимо проанализировать
-                   engine='openpyxl') # Загрузка данных из Excel
+df = pd.read_csv('C:/Data/dataset_test.csv',  # путь до данных, которые необходимо проанализировать
+                 index_col=0, # Загрузка данных из Excel
+                 sep=';')
 
 model = pretrained_model.get_model(model_type='catboost') # Загрузка модели. Доступные модели: 'catboost' и 'cnn'
-
+df = df.drop("Class_label",
+             axis=1)
 result = model.predict(df) # Получение результатов анализа.
 
+df['Class_label'] = result
+df.to_csv('C:/Data/Overrated.csv',
+          sep=';')
+
 utils.visualize_data(df,
-                     user_id='8fc79c7f-bbdb-4512-b460-c75aacd1a3c7',
+                     user_id='dff4a3a1-3d58-4072-a903-e5b38e2c541f',
                      test_id=3,
                      presentation_id=1,
                      result=result) # визуализация результатов для некоторого пользователя

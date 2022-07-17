@@ -11,7 +11,7 @@ if is_test:
                      sep=';')
     if is_visualize:
         utils.visualize_data(df,
-                             user_id='8fc79c7f-bbdb-4512-b460-c75aacd1a3c7',
+                             user_id='dff4a3a1-3d58-4072-a903-e5b38e2c541f',
                              test_id=4,
                              presentation_id=1)
 else:
