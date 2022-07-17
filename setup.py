@@ -48,9 +48,6 @@ def get_test_requirements() -> List[str]:
 
 def get_long_description() -> str:
     return ""
-    # base_dir = Path(__file__).absolute().parent
-    # with (base_dir / "README.md").open(encoding="utf-8") as f:
-    #     return f.read()
 
 
 class UploadCommand(Command):
@@ -99,7 +96,18 @@ setup(
     author="Overrated team",
     license="MIT",
     url=url,
+    include_package_data=True,
     packages=setuptools.find_packages(),
+    data_files=[("overrated_ld_stress_detector",
+                 ["overrated_ld_stress_detector/models/nn_full.pth",
+                  "overrated_ld_stress_detector/models/model_4.pckl",
+                  "overrated_ld_stress_detector/models/model_3.pckl",
+                  "overrated_ld_stress_detector/models/model_2.pckl",
+                  "overrated_ld_stress_detector/models/model_1.pckl",
+                  "overrated_ld_stress_detector/models/model_0.pckl",
+                  "overrated_ld_stress_detector/models/dataset_test.xlsx",
+                  "overrated_ld_stress_detector/README.md",
+                  "overrated_ld_stress_detector/models/dataset_train.xlsx"])],
     install_requires=required,
     classifiers=[
         "License :: OSI Approved :: MIT License",

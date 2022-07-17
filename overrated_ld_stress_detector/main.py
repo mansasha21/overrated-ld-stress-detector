@@ -13,10 +13,10 @@ utils.visualize_data(df,
 df = df.drop("Class_label",
              axis=1)
 
-model = pretrained_model.get_model(model_type='cnn')
+model = pretrained_model.get_model(model_type='catboost')
 
-result = model.predict(df.iloc[:200])
-print(result)
+result = model.predict(df)
+
 utils.visualize_data(df,
                      user_id='8fc79c7f-bbdb-4512-b460-c75aacd1a3c7',
                      test_id=3,
