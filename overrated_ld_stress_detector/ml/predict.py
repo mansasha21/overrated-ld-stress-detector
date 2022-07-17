@@ -9,6 +9,7 @@ from sklearn.model_selection import StratifiedKFold
 import os
 from overrated_ld_stress_detector.constants import MODELS_DIR
 
+
 class SignalModel(nn.Module):
     """
     Define architecture of the used model
@@ -66,14 +67,14 @@ class PytorchModel:
     """
 
     def __init__(self,
-                 model_path=os.getcwd() + '/models/nn_full.pth',
+                 model_path=MODELS_DIR / 'nn_full.pth',
                  device: str = "cpu") -> None:
         """
         :param model_path: str, path to model file
         :param device: str, device to use ['cpu', 'cuda']
         """
         if model_path is None:
-            model_path = os.getcwd() + '/models/nn_full.pth'
+            model_path = MODELS_DIR / 'nn_full.pth'
         self.model = SignalModel()
         self.model.load_state_dict(torch.load(model_path, map_location=torch.device(device)))
         self.device = device
@@ -105,7 +106,7 @@ class CatboostModel:
         """
         if model_path is None:
             model_path = MODELS_DIR
-        self.models = [pickle.load(open(MODELS_DIR / ('model_' + str(i) + ".pckl"), 'rb')) for i in range(model_count)]
+        self.models = [pickle.load(open(model_path / ('model_' + str(i) + ".pckl"), 'rb')) for i in range(model_count)]
         self.model_count = model_count
 
     def predict(self, df):
