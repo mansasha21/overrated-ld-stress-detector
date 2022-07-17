@@ -7,7 +7,7 @@ from scipy import stats
 from catboost import CatBoostClassifier
 from sklearn.model_selection import StratifiedKFold
 import os
-
+from overrated_ld_stress_detector.constants import MODELS_DIR
 
 class SignalModel(nn.Module):
     """
@@ -96,7 +96,7 @@ class CatboostModel:
     """
 
     def __init__(self,
-                 model_path=os.getcwd() + '/models/',
+                 model_path=MODELS_DIR,
                  model_count=5) -> None:
         """
         Load and initialize models from files.
@@ -104,8 +104,8 @@ class CatboostModel:
         :param model_count: int, number of models to load
         """
         if model_path is None:
-            model_path = os.getcwd() + '/models/'
-        self.models = [pickle.load(open(model_path + 'model_' + str(i) + ".pckl", 'rb')) for i in range(model_count)]
+            model_path = MODELS_DIR
+        self.models = [pickle.load(open(MODELS_DIR / ('model_' + str(i) + ".pckl"), 'rb')) for i in range(model_count)]
         self.model_count = model_count
 
     def predict(self, df):
@@ -121,7 +121,7 @@ class CatboostModel:
     def train(self,
               df,
               model_count=5,
-              save_path=os.getcwd() + '/models/',
+              save_path=MODELS_DIR,
               iterations=1000,
               ):
         """
@@ -148,5 +148,5 @@ class CatboostModel:
 
         if save_path is not None:
             for i, model in enumerate(models):
-                pickle.dump(model, open(save_path + 'model_{i}.pckl', 'wb'))
+                pickle.dump(model, open(save_path / ('model_{i}.pckl'), 'wb'))
         return models
