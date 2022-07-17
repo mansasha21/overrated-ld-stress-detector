@@ -105,7 +105,7 @@ setup(
                   "overrated_ld_stress_detector/models/model_2.pckl",
                   "overrated_ld_stress_detector/models/model_1.pckl",
                   "overrated_ld_stress_detector/models/model_0.pckl",
-                  "overrated_ld_stress_detector/models/dataset_test.xlsx",
+                  "overrated_ld_stress_detector/models/dataset_test.csv",
                   "overrated_ld_stress_detector/README.md",
                   "overrated_ld_stress_detector/models/dataset_train.xlsx"])],
     install_requires=required,
