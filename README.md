@@ -62,10 +62,10 @@ utils.visualize_data(df,
 # Разработчики
 Имя| Роль | Контакт |
 --- | --- | ---  
-Суржиков Александр | Data Scientist |  
+Суржиков Александр | Data Scientist |  https://t.me/mansasha
 --- | --- | ---  
-Кочетков Максим | Data Scientist | https://t.me/mansasha
+Кочетков Максим | Data Scientist | https://t.me/Mahhets
 --- | --- | ---  
-Ванданов Сергей | Data Scientist  | 
+Ванданов Сергей | Data Scientist  | -
 --- | --- | ---  
-Андрей Стебеньков | Data Scientist  |  
+Андрей Стебеньков | Data Scientist  | -
