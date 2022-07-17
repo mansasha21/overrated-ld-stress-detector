@@ -5,8 +5,8 @@
 
 На картинке ниже изображен один из результатов анализа сигналов фотоплетизмограммы и пьезоплетизмограммы.  
 Введены следующие обозначения: **0** - слабый стресс. **1** - умеренный стресс. **2** - сильный стресс.
-![photo_example](img/photo_example.png)
-![phezo_example](img/phezo_example.png)
+![photo_example](https://github.com/mansasha21/overrated-ld-stress-detector/blob/main/img/photo_example.png?raw=true)
+![phezo_example](https://github.com/mansasha21/overrated-ld-stress-detector/blob/main/img/phezo_example.png?raw=true)
 
 # Установка
 - `pip install -U overrated-ld-stress-detector`
