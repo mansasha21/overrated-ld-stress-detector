@@ -1,12 +1,19 @@
-import catboost
 from ml.predict import PytorchModel
 from ml.predict import CatboostModel
 
 
-def get_model(model_path=None):
-    model = CatboostModel(model_path)
+def get_model(model_type='catboost',
+              model_path=None,
+              device='cpu'):
+    '''
+    Returns a model object.
+    :param model_type: str, one of ['cnn', 'catboost']
+    :param model_path: str, path to model file
+    :param device: str, device to use
+    '''
+    model = None
+    if model_type == 'catboost':
+        model = CatboostModel(model_path)
+    elif model_type == 'cnn':
+        model = PytorchModel(device=device)
     return model
-
-
-def get_nn_model(device='cpu'):
-    return PytorchModel(device=device)

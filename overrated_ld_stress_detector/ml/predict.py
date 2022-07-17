@@ -52,6 +52,8 @@ class PytorchModel:
     def __init__(self,
                  model_path='models/nn_full.pth',
                  device: str = "cpu") -> None:
+        if model_path is None:
+            model_path = 'models/nn_full.pth'
         self.model = SignalModel()
         self.model.load_state_dict(torch.load(model_path, map_location=torch.device(device)))
         self.device = device
@@ -64,9 +66,11 @@ class PytorchModel:
 
 class CatboostModel:
     def __init__(self,
-                 model_path=None,
+                 model_path='models',
                  model_count=5) -> None:
-        self.models = [pickle.load(open(model_path + "/model_" + str(i) + ".pckl", 'rb')) for i in range(model_count)]
+        if model_path is None:
+            model_path = 'models'
+        self.models = [pickle.load(open(model_path + '/model_' + str(i) + ".pckl", 'rb')) for i in range(model_count)]
         self.model_count = model_count
 
     def predict(self, df):
