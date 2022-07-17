@@ -29,7 +29,7 @@ def visualize_data(df,
 
     if result is None:
         target = df[df.Filename == f'{user_id}'].query(f'Test_index=={test_id}').query(
-        f'Presentation=={presentation_id}').Class_label.values
+            f'Presentation=={presentation_id}').Class_label.values
     else:
         target = result
 
@@ -52,7 +52,6 @@ def visualize_data(df,
                       annotation={"text": str(int(target[i // (frequency * len_seconds) - 1])),
                                   "showarrow": False},
                       )
-
 
     fig.show()
 

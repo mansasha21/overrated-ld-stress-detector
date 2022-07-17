@@ -4,6 +4,12 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 
 def process_data(df):
+    """
+    Process data for ML model.
+    :param df: pandas.DataFrame - raw dataset to analyze
+    :return: pandas.DataFrame with processed data
+    """
+    # parse data
     func = lambda x: 1 if len(x) > 0 else np.NAN
     try_df = df.copy()
     try_df['Data'] = try_df['Data'].apply(eval)
@@ -28,7 +34,7 @@ def process_data(df):
                 photo.loc[i, 'Data'] = scaler_photo.transform(np.array(row['Data']).reshape(-1, 1))
         except:
             continue
-
+    # normalize data
     scaler_piezo = MinMaxScaler()
     flag_piezo = True
     for i, row in piezo.iterrows():
@@ -43,8 +49,9 @@ def process_data(df):
 
     all_df = photo
     all_df['Data_2'] = piezo['Data_2']
-
     percent_df = all_df.copy()
+
+    # quantization of data
     quant_list = [0.01, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 0.99]
 
     def _quant(row: pd.Series, quant=None):
@@ -59,7 +66,7 @@ def process_data(df):
             continue
 
     stats_df = percent_df.copy()
-    for f,v in zip([np.mean, np.max, np.min, np.median], ["mean", "max", "min", "median"]):
+    for f, v in zip([np.mean, np.max, np.min, np.median], ["mean", "max", "min", "median"]):
         try:
             stats_df[f'Data_{v}'] = stats_df['Data'].apply(f)
             stats_df[f'Data2_{v}'] = stats_df['Data_2'].apply(f)
@@ -72,13 +79,15 @@ def process_data(df):
         'Question': 'int'
     })
 
+    # spectrum analyze of data
+
     N = 10
 
     def abs_amplitude(row: pd.Series):
         """
-        Модуль амплитуды
-        :param row:
-        :return:
+        Calculate absolute amplitude of signal
+        :param row: pandas.Series - signal
+        :return: pandas.Series - absolute amplitude
         """
         F = np.fft.rfft(row, n=None, axis=-1)
         A = [((F[i].real) ** 2 + (F[i].imag) ** 2) ** 0.5 for i in np.arange(0, N, 1)]
@@ -86,10 +95,9 @@ def process_data(df):
 
     def phase(row: pd.Series):
         """
-        Фаза
-        :param row:
-        :param F: прямое преобразование Фурье в частотную область
-        :return:
+        Calculate phase of signal. Fourier transform of signal is used.
+        :param row: pandas.Series - signal
+        :return: pandas.Series - phase
         """
         F = np.fft.rfft(row, n=None, axis=-1)
         arg = []
@@ -101,6 +109,7 @@ def process_data(df):
                 arg.append(np.pi / 2)
         return arg
 
+    # generate new features
     prep_df['data_apm'] = prep_df['Data'].apply(abs_amplitude)
     prep_df['data_2_apm'] = prep_df['Data_2'].apply(abs_amplitude)
     prep_df['data_phase'] = prep_df['Data'].apply(phase)
@@ -122,6 +131,11 @@ def process_data(df):
 
 
 def process_data_nn(df):
+    """
+    Process data for neural network
+    :param df: Pandas dataframe - dataframe with raw data
+    :return: numpy array with processed data
+    """
     correct_mask = (df.Data.apply(lambda x: len(eval(x))) == 240) & (df.Data_2.apply(lambda x: len(eval(x))) == 240)
 
     vals = df.loc[correct_mask].Data.apply(eval)
@@ -138,4 +152,3 @@ def process_data_nn(df):
 
     transformed_data = np.concatenate((transformed_data_1, transformed_data_2), axis=1)
     return transformed_data
-
