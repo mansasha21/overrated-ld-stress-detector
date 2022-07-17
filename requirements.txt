@@ -1,0 +1,6 @@
+plotly
+numpy
+pandas
+catboost
+scikit-learn
+torch>=1.9.0
