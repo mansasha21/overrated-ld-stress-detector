@@ -4,6 +4,8 @@ import torch
 import torch.nn as nn
 import overrated_ld_stress_detector.preprocessing as preprocessing
 from scipy import stats
+from catboost import CatBoostClassifier
+from sklearn.model_selection import StratifiedKFold
 
 
 class SignalModel(nn.Module):
@@ -110,3 +112,36 @@ class CatboostModel:
         modified_data = preprocessing.process_data(df)
         result = np.array([self.models[i].predict(modified_data).flatten() for i in range(0, self.model_count)])
         return stats.mode(result)[0][0]
+
+    def train(self,
+              df,
+              model_count=5,
+              save_path='models/',
+              iterations=1000,
+              ):
+        """
+        Train model on data.
+        :param df: pandas.DataFrame - raw dataset to train on
+        :param model_count: int, number of models to train
+        :param save_path: str, path to folder to save models
+        :param iterations: int, number of iterations to train
+        """
+        modified_data = preprocessing.process_data(df)
+        target = modified_data['Class_label']
+        modified_data = modified_data.drop(['Class_label'], axis=1)
+        cat_features = modified_data.select_dtypes(include=['category']).columns.to_list()
+
+        skfg = StratifiedKFold(n_splits=model_count, random_state=142, shuffle=True)
+        models = []
+        for train_ids, val_ids in skfg.split(modified_data, target):
+            classifier = CatBoostClassifier(random_state=142, iterations=iterations,
+                                            verbose=250, use_best_model=True,
+                                            eval_metric='TotalF1')
+            classifier.fit(modified_data.loc[train_ids], target[train_ids], cat_features=cat_features,
+                           eval_set=(modified_data.loc[val_ids], target[val_ids]))
+            models.append(classifier)
+
+        if save_path is not None:
+            for i, model in enumerate(models):
+                pickle.dump(model, open(save_path + 'model_{i}.pckl', 'wb'))
+        return models
