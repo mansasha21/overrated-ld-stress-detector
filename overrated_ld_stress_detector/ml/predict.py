@@ -3,7 +3,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset
-import preprocessing
+import overrated_ld_stress_detector.preprocessing as preprocessing
 from scipy import stats
 
 
