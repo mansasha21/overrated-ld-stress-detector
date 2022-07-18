@@ -70,7 +70,7 @@ utils.visualize_data(df,
 --- | --- | ---  
 Суржиков Александр | Data Scientist |  https://t.me/mansasha
 --- | --- | ---  
-Кочетков Максим | Data Scientist | https://t.me/Mahhets
+Кочетков Максим | Data Scientist | https://t.me/mahhets
 --- | --- | ---  
 Ванданов Сергей | Data Scientist  | -
 --- | --- | ---  
